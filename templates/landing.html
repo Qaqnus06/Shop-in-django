@@ -9,7 +9,11 @@
     <h1>Bu landing varog'i</h1>
     <p>
          <a style="color: blue;" href="{% url 'user:register'  %}">Register</a>
-         <a style="color: red;" href="{% url 'user:login'  %}">Log in</a>
+         {% if user.is_authenticated %}
+         <a style="color: red;" href="{% url 'user:logout'  %}">Logout</a>
+         {% else %}
+         <a style="color: red;" href="{% url 'user:login'  %}">Login</a>
+         {% endif %}
     </p>
 </body>
 </html>
