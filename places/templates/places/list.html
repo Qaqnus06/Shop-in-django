@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Places page</h1>
+
+    <p>
+
+        <ul>
+
+            {% for place in places %}
+
+                <li><a href="{% url 'places:detail' place.id %}">{{place}}</a></li>
+
+            {% endfor  %}  
+        </ul>
+
+
+    </p>
+
+</body>
+</html>

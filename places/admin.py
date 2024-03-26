@@ -13,6 +13,7 @@ class PlaceAdmin(admin.ModelAdmin):
     list_display = ('id','name','adress')
     search_fields = ('name',)
     list_per_page = 100
+    list_display_links=('name',)
 
 class PlaceOwnerAdmin(admin.ModelAdmin):
     list_display = ('id','place','owner')
@@ -24,10 +25,6 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('place','user') 
     save_as = False
     list_filter=('place',)
-    
-   
-    
-    
       
 admin.site.register(Place,PlaceAdmin)
 admin.site.register(Owner,OwnerAdmin)

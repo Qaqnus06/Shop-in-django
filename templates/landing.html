@@ -7,13 +7,24 @@
 </head>
 <body>
     <h1>Bu landing varog'i</h1>
+    {%if messages %}
+    {%  for  message in messages %}
+    
+        {{message}}
+    {%  endfor%}
+    {%endif %}
     <p>
-         <a style="color: blue;" href="{% url 'user:register'  %}">Register</a>
+         <a style="color: blue;" href="{% url 'user:register'  %}">Register</a>/
          {% if user.is_authenticated %}
-         <a style="color: red;" href="{% url 'user:logout'  %}">Logout</a>
+         <a style="color: red;" href="{% url 'user:logout'  %}">Logout</a>/
          {% else %}
-         <a style="color: red;" href="{% url 'user:login'  %}">Login</a>
+         <a style="color: red;" href="{% url 'user:login'  %}">Login</a>/
          {% endif %}
-    </p>
+         <a href="{%  url 'places:list' %}">Places</a>/
+         <a href="{%  url 'user:profile' %}">Profile </a>/
+        </p>
+   
 </body>
 </html>
+
+

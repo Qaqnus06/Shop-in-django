@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from django .views import View
-from .forms import RegisterForm,LoginForm
+from .forms import RegisterForm,LoginForm,ProfileUpdateForm
 from django.contrib.auth import authenticate
 from django.contrib.auth .mixins import LoginRequiredMixin
 from django.contrib.auth import logout,login
+from django.template import TemplateDoesNotExist
+from django.http import HttpResponseServerError
+from django.contrib  import  messages
 
 
 class LoginView(View):
@@ -21,13 +24,15 @@ class LoginView(View):
             user=authenticate(username=username ,password=password)
             if user is not None:
                 login(request,user)
+                messages.success(request,"siz muvaffaqiyatli kirdingiz")
 
             return redirect('landing_page')
         return render(request,'login.html',context={'form':form})    
 class LogoutView(LoginRequiredMixin,View):
     def get(self, request):
         logout(request)
-        return redirect('landing_page')
+        messages.success(request,"siz muvaffaqiyatli  logout qildingiz")
+        return redirect('landing_page') 
 
 
     
@@ -48,3 +53,23 @@ class RegisterView(View):
             return redirect('landing_page')
         else:
             return render(request,'register.html',context={'form':form})
+
+
+class ProfileUpdateView(LoginRequiredMixin,View):
+
+    def get (self,request):
+        form=ProfileUpdateForm(instance=request.user)
+        return render(request,'profile.html',{'form':form})
+    
+
+    def post(sellf,request):
+        form=ProfileUpdateForm(instance=request.user,data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success("muvaffaqiyatli kiridingiz")
+            return redirect('places:list')
+        
+        return render(request,'profile.html',{'form':form})
+    
+
