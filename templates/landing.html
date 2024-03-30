@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Bu landing varog'i</h1>
-    {%if messages %}
-    {%  for  message in messages %}
-    
-        {{message}}
-    {%  endfor%}
-    {%endif %}
+{% extends 'base.html' %}
+{% block title %}
+        Landing page
+{% endblock%}
+{% block content %}
+<h1>Bu landing varog'i</h1>
+
+            {%  if messages %}
+            {%  for  message in messages %}
+            
+                {{message}}
+            {%  endfor %}
+            {% endif %}
     <p>
          <a style="color: blue;" href="{% url 'user:register'  %}">Register</a>/
          {% if user.is_authenticated %}
@@ -21,10 +19,23 @@
          <a style="color: red;" href="{% url 'user:login'  %}">Login</a>/
          {% endif %}
          <a href="{%  url 'places:list' %}">Places</a>/
-         <a href="{%  url 'user:profile' %}">Profile </a>/
-        </p>
-   
-</body>
-</html>
+         <a href="{% url 'user:profile' %}">Profile</a>/
+    </p>
+  
+    {% for izoh in  place.izohlar.all %}
+    <div class="row mt-2  mb-2">
+        <div class="col-1 me-2 ">
+        <img src="{{izoh.user.image.url}}" alt="User photo">
+    </div>
+        <div class="col-7">
+            <b>{{izoh.user.username}}</b> berildi {{izoh.stars_given}} yulduz <i>{{izoh.created_at}}</i>
+            <p class="mt-2 font-monospace">
+                {{izoh.comment_text}}
+            </p>
+        </div>
+    </div>
 
+  {%endfor %}
 
+    
+{% endblock %}

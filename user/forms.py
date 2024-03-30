@@ -1,4 +1,4 @@
-from django .contrib.auth.models import User
+from .models import User
 
 from django  import forms
 
@@ -87,7 +87,7 @@ class ProfileUpdateForm(forms.ModelForm):
     
     class Meta:
         model=User
-        fields=['username','first_name' ,'last_name','email']
+        fields=['username','first_name' ,'last_name','email','photo','photo_numb']
         
         
         

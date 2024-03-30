@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form method="post">
+{% extends 'base.html' %}
+
+{% block title %}
+    <h1>Login page</h1>
+{% endblock%}
+
+{% block content %}
+<form method="post">
     {% csrf_token %}
     {{form.as_p}}
-
+    <p>Siz ro'yxatdan  o'tmaganmisiz <a href="{% url 'user:register' %}">Ro'yxatdan o'tish</a></p>
     <button type="submit" style="color: red; justify-content:end;"> Log in</button>
+
 </form>
-</body>
-</html>
+
+ 
+{% endblock %}
+

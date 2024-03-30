@@ -1,22 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Placea detail</title>
-</head>
-<body>
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="rasm bor qoyilmagan hali">
-        <div class="card-body">
-          <h5 class="card-title">{{place.name}}</h5>
-          <p class="card-text"><p>{{place.description}}</p></p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
+{% extends 'base.html' %}
+{% load static %}
 
-    
-   
-    
-</body>
-</html>
+{% block title %}
+<h1>Place detail</h1>
+
+{% endblock%}
+
+{% block content %} 
+
+          <h1>Place detail</h1>
+          <h5 >{{place.name}}</h5>
+          <p ><p>{{place.description}}</p></p>
+          <img src="{{place.image.url}}" alt="">
+            <div class="row mb-4">
+                <div class="col-6">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                    </form>
+                </div >
+            </div>
+          <h1>Reviews</h1>
+
+
+          {% for izoh in  place.izohlar.all %}
+            <div class="row mt-2  mb-2">
+                <div class="col-1 me-2 ">
+                <img src="{{izoh.user.image.url}}" alt="User photo">
+            </div>
+                <div class="col-7">
+                    <b>{{izoh.user.username}}</b> berildi {{izoh.stars_given}} yulduz <i>{{izoh.created_at}}</i>
+                    <p class="mt-2 font-monospace">
+                        {{izoh.comment_text}}
+                    </p>
+                </div>
+            </div>
+        
+          {%endfor %}
+
+{% endblock %}
+
+

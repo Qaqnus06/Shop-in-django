@@ -1,11 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
+from user.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from django.utils import timezone 
+from django.db import models
 class Place(models.Model):
     name=models.CharField(max_length=200)
     description=models.TextField()
     adress=models.CharField(max_length=200)
+    image=models.ImageField(upload_to="place_photos/",default="")
 
     def __str__(self):
         return self.name
@@ -29,9 +31,10 @@ class PlaceOwner(models.Model):
 
 class Comment(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    place=models.ForeignKey(Place,on_delete=models.CASCADE)
+    place=models.ForeignKey(Place,on_delete=models.CASCADE,related_name="izohlar")
     comment_text=models.TextField()
     stars_given=models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)])
+    created_at=models.DateTimeField(default=timezone.now)
 
 
     def ___str__(self):

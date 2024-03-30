@@ -63,11 +63,11 @@ class ProfileUpdateView(LoginRequiredMixin,View):
     
 
     def post(sellf,request):
-        form=ProfileUpdateForm(instance=request.user,data=request.POST)
+        form=ProfileUpdateForm(instance=request.user,data=request.POST, files=request.FILES)
 
         if form.is_valid():
             form.save()
-            messages.success("muvaffaqiyatli kiridingiz")
+            messages.success(request,"muvaffaqiyatli kiridingiz")
             return redirect('places:list')
         
         return render(request,'profile.html',{'form':form})

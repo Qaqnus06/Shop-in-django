@@ -1,26 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Places page</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
 
-    <p>
+{% endblock%}
 
-        <ul>
+{% block content %}
 
+    <div class="row mb-3 mt-4">
+        <div class="col-4">
+            <form action="" method="get" class="d-flex">
+                <input type="text" class="form-control me-2" placeholder="Search" name="q" value="{{search_query}}">
+                <button class="btn btn-success">Search</button>
+            </form>
+        </div>
+    </div>
+
+{% if places %}
             {% for place in places %}
-
+               <di  class="mt-4">
+                <div class="row">
+                    <div class="col-2 mb-4">
+                        <img src=" {{place.image.url}}" alt="rasm bor">
+                    </div>    
+                
                 <li><a href="{% url 'places:detail' place.id %}">{{place}}</a></li>
+                    
+                 <div class="col-6">
+                       
+                    <p>
+                        {{place.description|truncatewords:15}}
+                    </p>
+                    <a class="btn btn-outline-primary" href="{% url 'places:detail' place.id %}">Read more</a>
+                 </div>
+                </div>
+               </div>
+                {% endfor  %} 
+{% else %}   
+    <p>No places found</p>             
+{% endif %}
+{% endblock %}
 
-            {% endfor  %}  
-        </ul>
-
-
-    </p>
-
-</body>
-</html>
