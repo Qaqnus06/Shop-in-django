@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <h1>User page</h1>
+{% endblock%}
+
+{% block content %}
+    <h1>User page</h1>
+
+    {% for friend in user %}
+        {% if friend  not in friend_requests %}
+        <div class="row">
+            <div class="col-1">
+                <img src="{{ friend.photo.url }}" alt="user pictures" height="100px" width="100px"  style="border-radius: 50%; margin-bottom: 10px;">
+            </div>
+            <div class="col-6">
+                <p><b>{{friend.username}}</b></p>
+                <p><b>{{friend.email}}</b></p>
+            </div>
+            <div class="col">
+                <!-- <button class="btn btn-outline-primary">Ignore</button> -->
+                <a  href="{% url 'user/send_request' friend.id %}" class="btn btn-outline-primary">Send request</a>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+  {% for izoh in  place.izohlar.all %}
+    {% if izoh.user in user.friends.all %}
+    <div class="row mt-2  mb-2">
+        <div class="col-1 me-2 ">
+        <img src="{{izoh.user.image.url}}" alt="User photo">
+    </div>
+        <div class="col-7">
+            <b>{{izoh.user.username}}</b> berildi {{izoh.stars_given}} yulduz <i>{{izoh.created_at}}</i>
+            <p class="mt-2 font-monospace">
+                {{izoh.comment_text}}
+            </p>
+        </div>
+    </div>
+    {% endif %}
+    {%endfor %}
+
+    
+{% endblock %}
+

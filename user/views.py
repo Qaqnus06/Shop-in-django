@@ -4,9 +4,8 @@ from .forms import RegisterForm,LoginForm,ProfileUpdateForm
 from django.contrib.auth import authenticate
 from django.contrib.auth .mixins import LoginRequiredMixin
 from django.contrib.auth import logout,login
-from django.template import TemplateDoesNotExist
-from django.http import HttpResponseServerError
 from django.contrib  import  messages
+from .models import User,FriendRequest  
 
 
 class LoginView(View):
@@ -71,5 +70,45 @@ class ProfileUpdateView(LoginRequiredMixin,View):
             return redirect('places:list')
         
         return render(request,'profile.html',{'form':form})
+class UserView(LoginRequiredMixin,View):
+    def get(self,request):
+        user=User.objects.exclude(username=request.user.username)   
+        friend_requests=FriendRequest.objects.filter(to_user=request.user) 
+
+        return render(request,'user_list.html',{'user':user,"friend_requests":friend_requests})
     
+
+
+class MynetworksView(LoginRequiredMixin,View):
+    def get(self,request):
+        networks=FriendRequest.objects.filter(to_user=request.user, is_accepted=False)
+
+
+        return render(request,'user/networks_list.html',{'networks':networks})
+
+
+class AcceptFriendRequestView(LoginRequiredMixin,View):
+    def get(self,request,id):
+        friend_request=FriendRequest.objects.get(id=id)
+        from_user=friend_request.from_user
+        main_user=request.user
+
+        main_user.friends.add(from_user)
+        from_user.friends.add(main_user)
+
+        friend_request.is_accepted=True
+        friend_request.save()
+        return redirect('user:my_networks')
+
+
+class SendFriendRequestView(LoginRequiredMixin,View,id):
+    def get(self,request,id):
+        to_user=User.objects.get(id=id)
+        from_user=request.user
+
+        FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+
+       
+        return redirect('user:user_list')
+
 

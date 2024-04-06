@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <h1>User page</h1>
+{% endblock%}
+
+{% block content %}
+    <h1>My networks page</h1>
+    <hr>
+
+    {% for network in networks %}
+        <div class="row">
+            <div class="col-1">
+                <img src="{{ network.from_user.photo.url }}" alt="user pictures" height="100px" width="100px"  style="border-radius: 50%; margin-bottom: 10px;">
+            </div>
+            <div class="col-6">
+                <p><b>{{network.from_user.username}}</b></p>
+                <p><b>{{network.from_user.email}}</b></p>
+            </div>
+            <div class="col">
+                <a href="#" class="btn btn-outline-secondary">Ignore</a>
+                <a href="{% url 'user:accept_friend' network.id %}" class="btn btn-outline-primary">Accept</a>
+            </div>
+        </div>
+    {% endfor %}
+
+
+
+    <h1>My Friends  </h1>
+    <hr>
+
+    {% for friend in friends.all %}
+        <div class="row">
+            <div class="col-1">
+                <img src="{{ friend.photo.url }}" alt="user pictures" height="100px" width="100px"  style="border-radius: 50%; margin-bottom: 10px;">
+            </div>
+            <div class="col-6">
+                <p><b>{{friend.username}}</b></p>
+                <p><b>{{friend.email}}</b></p>
+            </div>
+            <div class="col">
+                <a href="#" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+

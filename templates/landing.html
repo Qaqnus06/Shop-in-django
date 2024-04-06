@@ -21,8 +21,13 @@
          <a href="{%  url 'places:list' %}">Places</a>/
          <a href="{% url 'user:profile' %}">Profile</a>/
     </p>
-  
+      <!-- # bu yerda faqatgina dostlari yozgan komentariyalari korinadi holos -->
+    <!-- # bu yerda faqatgina dostlari yozgan komentariyalari korinadi holos -->
+    <!-- # bu yerda faqatgina dostlari yozgan komentariyalari korinadi holos -->
+    <!-- # bu yerda faqatgina dostlari yozgan komentariyalari korinadi holos -->
+
     {% for izoh in  place.izohlar.all %}
+    {% if izoh.user in user.friends.all %}
     <div class="row mt-2  mb-2">
         <div class="col-1 me-2 ">
         <img src="{{izoh.user.image.url}}" alt="User photo">
@@ -34,8 +39,8 @@
             </p>
         </div>
     </div>
-
-  {%endfor %}
+    {% endif %}
+    {%endfor %}
 
     
 {% endblock %}
