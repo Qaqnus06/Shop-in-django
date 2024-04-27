@@ -101,14 +101,14 @@ class AcceptFriendRequestView(LoginRequiredMixin,View):
         return redirect('user:my_networks')
 
 
-class SendFriendRequestView(LoginRequiredMixin,View,id):
-    def get(self,request,id):
-        to_user=User.objects.get(id=id)
-        from_user=request.user
+# class SendFriendRequestView(LoginRequiredMixin,View,id):
+#     def get(self,request,id):
+#         to_user=User.objects.get(id=id)
+#         from_user=request.user
 
-        FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+#         FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
 
        
-        return redirect('user:user_list')
+#         return redirect('user:user_list')
 
 
